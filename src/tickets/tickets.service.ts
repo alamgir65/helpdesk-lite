@@ -30,6 +30,8 @@ export class TicketsService {
         }
     ]
 
+    private nextTicketId = 4;
+
     findAll(status?: Ticket['status'], priority?: Ticket['priority']) {
         let tickets = this.tickets;
         if(status) {
@@ -50,5 +52,16 @@ export class TicketsService {
         return ticket;
     }
 
-    
+    create(payload: any){
+        const ticket: Ticket = {
+            id: this.nextTicketId++,
+            subject: payload.subject,
+            description: payload.description,
+            priority: payload.priority,
+            status: 'open',
+            createdAt: new Date().toISOString(),
+        };
+        this.tickets.push(ticket);
+        return ticket;
+    }
 }
